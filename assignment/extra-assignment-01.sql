@@ -6,7 +6,7 @@ USE fresher_management;
 -- Question 01: Tạo bảng trainee
 DROP TABLE IF EXISTS trainee;
 CREATE TABLE IF NOT EXISTS trainee (
-	trainee_id INT,
+    trainee_id INT,
     full_name VARCHAR(50),
     birth_date DATETIME,
     gender ENUM('MALE', 'FEMALE', 'UNKNOWN'),

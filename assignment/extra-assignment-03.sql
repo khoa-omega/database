@@ -2,7 +2,7 @@
 -- nhóm chúng thành các tháng sinh khác nhau
 SELECT MONTH(birth_date) AS month_of_birth, COUNT(trainee_id) AS total_trainees
 FROM trainee
-WHERE (et_iq + et_gmath) >= 20 AND et_iq >= 8 AND et_gmath >= 8 AND et_english >= 1
+WHERE (et_iq + et_gmath) >= 20 AND et_iq >= 8 AND et_gmath >= 8 AND et_english >= 18
 GROUP BY MONTH(birth_date);
 
 -- Câu 3: Viết lệnh để lấy ra thực tập sinh có tên dài nhất, lấy ra các thông tin sau:
@@ -13,10 +13,10 @@ GROUP BY MONTH(birth_date);
 --   * ET_IQ + ET_Gmath >= 20
 --   * ET_IQ >= 8
 --   * ET_Gmath >= 8
---   * ET_English >= 1
+--   * ET_English >= 18
 SELECT *
 FROM trainee
-WHERE (et_iq + et_gmath) >= 20 AND et_iq >= 8 AND et_gmath >= 8 AND et_english >= 1;
+WHERE (et_iq + et_gmath) >= 20 AND et_iq >= 8 AND et_gmath >= 8 AND et_english >= 18;
 
 -- Câu 5: Xóa thực tập sinh có trainee_id = 3
 DELETE FROM trainee
@@ -25,5 +25,5 @@ WHERE trainee_id = 3;
 -- Câu 6: Thực tập sinh có trainee_id = 5 được chuyển sang lớp "2". Hãy cập nhật
 -- thông tin vào database
 UPDATE trainee
-SET training_class = 2
+SET training_class = '2'
 WHERE trainee_id = 5;

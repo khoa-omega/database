@@ -136,6 +136,20 @@ SELECT department_id
 FROM department
 WHERE department_name = 'Sale';
 
+-- Câu 4: Lấy ra thông tin account có full name dài nhất
+SELECT *
+FROM `account`
+WHERE CHAR_LENGTH(full_name) =
+    (SELECT MAX(CHAR_LENGTH(full_name))
+    FROM `account`);
+
+-- Câu 5: Lấy ra thông tin account có full name dài nhất và thuộc phòng ban có id = 3
+SELECT *
+FROM `account`
+WHERE department_id = 3 AND LENGTH(full_name) =
+	(SELECT MAX(LENGTH(full_name))
+	FROM `account`);
+
 -- Câu 6: Lấy ra tên group đã tham gia trước ngày 20/12/2019
 SELECT group_name
 FROM `group`
@@ -166,7 +180,7 @@ WHERE department_id = 2;
 -- Câu 11: Lấy ra nhân viên có tên bắt đầu bằng chữ "D" và kết thúc bằng chữ "o"
 SELECT *
 FROM `account`
-WHERE full_name LIKE 'D%o';
+WHERE SUBSTRING_INDEX(full_name, ' ', -1) LIKE 'D%o';
 
 -- Câu 12: Xóa tất cả các exam được tạo trước ngày 20/12/2019
 DELETE FROM exam

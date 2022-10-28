@@ -7,6 +7,11 @@ GROUP BY MONTH(birth_date);
 
 -- Câu 3: Viết lệnh để lấy ra thực tập sinh có tên dài nhất, lấy ra các thông tin sau:
 -- tên, tuổi, các thông tin cơ bản (như đã được định nghĩa trong table)
+SELECT *, SUBSTRING_INDEX(full_name, ' ', -1) AS name, TIMESTAMPDIFF(YEAR, CURRENT_DATE, birth_date) AS age
+FROM trainee
+WHERE LENGTH(full_name) =
+    (SELECT MAX(LENGTH(full_name))
+    FROM trainee);
 
 -- Câu 4: Viết lệnh để lấy ra tất cả các thực tập sinh là ET, 1 ET thực tập sinh là
 -- những người đã vượt qua bài test đầu vào và thỏa mãn số điểm như sau:

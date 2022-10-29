@@ -81,8 +81,8 @@ HAVING COUNT(account_id) =
 		FROM `account`
 		GROUP BY position_id) AS total_accounts_per_position);
 
--- Câu 11: Thống kê mỗi phòng ban có bao nhiêu Dev, Test, Scrum Master, PM
-SELECT department_name, position_name, IFNULL(total_accounts, 0)
+-- Câu 11: Thống kê mỗi phòng ban có bao nhiêu developer, tester, scrum master, project manager
+SELECT department_name, position_name, IFNULL(total_accounts, 0) AS total_accounts
 FROM
     (SELECT *
     FROM department
@@ -97,6 +97,15 @@ FROM
 		GROUP BY department_id, position_id) AS t2 USING (department_id, position_id)
 GROUP BY department_id , position_id
 ORDER BY department_id , position_id;
+
+-- Câu 12: Lấy thông tin chi tiết của câu hỏi bao gồm: thông tin cơ bản của
+-- question, loại câu hỏi, ai là người tạo ra câu hỏi, câu trả lời là gì, …
+SELECT *
+FROM question
+JOIN category_question USING(category_id)
+JOIN type_question USING(type_id)
+JOIN `account` ON creator_id = account_id
+JOIN answer USING(question_id);
 
 -- Câu 13: Lấy ra số lượng câu hỏi của mỗi loại tự luận hay trắc nghiệm
 SELECT type_question.*, COUNT(question_id) AS total_questions

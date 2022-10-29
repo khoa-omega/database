@@ -42,6 +42,7 @@ JOIN girl ON boy.id = girl.id
 WHERE boy.id = 1;
 
 -- LEFT (RIGHT) JOIN: Lấy phần chung và phần riêng của bảng bên trái (phải)
+-- Chú ý: Ứng với phần riêng chỉ có ở bảng bên trái (phải), bảng bên phải (trái) sẽ có giá trị NULL
 SELECT *
 FROM boy
 LEFT JOIN girl USING(id);

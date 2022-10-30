@@ -6,7 +6,7 @@ USE extra_assignment_04;
 DROP TABLE IF EXISTS department;
 CREATE TABLE department (
     department_number TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    department_name VARCHAR(50) NOT NULL
+    department_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 DROP TABLE IF EXISTS employee;

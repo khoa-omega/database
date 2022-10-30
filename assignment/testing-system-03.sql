@@ -146,8 +146,8 @@ WHERE CHAR_LENGTH(full_name) =
 -- Câu 5: Lấy ra thông tin account có full name dài nhất và thuộc phòng ban có id = 3
 SELECT *
 FROM `account`
-WHERE department_id = 3 AND LENGTH(full_name) =
-	(SELECT MAX(LENGTH(full_name))
+WHERE department_id = 3 AND CHAR_LENGTH(full_name) =
+	(SELECT MAX(CHAR_LENGTH(full_name))
 	FROM `account`);
 
 -- Câu 6: Lấy ra tên group đã tham gia trước ngày 20/12/2019

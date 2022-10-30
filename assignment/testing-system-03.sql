@@ -147,8 +147,8 @@ WHERE CHAR_LENGTH(full_name) =
 SELECT *
 FROM `account`
 WHERE department_id = 3 AND CHAR_LENGTH(full_name) =
-	(SELECT MAX(CHAR_LENGTH(full_name))
-	FROM `account`);
+    (SELECT MAX(CHAR_LENGTH(full_name))
+    FROM `account`);
 
 -- Câu 6: Lấy ra tên group đã tham gia trước ngày 20/12/2019
 SELECT group_name

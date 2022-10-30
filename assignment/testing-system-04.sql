@@ -30,10 +30,11 @@ FROM exam_question
 JOIN question USING(question_id)
 GROUP BY question_id
 HAVING COUNT(exam_id) =
-	(SELECT MAX(total_exams)
-	FROM (SELECT COUNT(exam_id) AS total_exams
-		FROM exam_question
-		GROUP BY question_id) AS total_exams_per_question);
+    (SELECT MAX(total_exams)
+    FROM
+        (SELECT COUNT(exam_id) AS total_exams
+        FROM exam_question
+        GROUP BY question_id) AS total_exams_per_question);
 
 -- Câu 6: Thống kê mỗi category question được sử dụng trong bao nhiêu question
 -- DELETE FROM question
@@ -57,11 +58,11 @@ FROM answer
 JOIN question USING(question_id)
 GROUP BY question_id
 HAVING COUNT(answer_id) =
-	(SELECT MAX(total_answers)
-	FROM 
-		(SELECT COUNT(answer_id) AS total_answers
-		FROM answer
-		GROUP BY question_id) AS total_answers_per_question);
+    (SELECT MAX(total_answers)
+    FROM 
+        (SELECT COUNT(answer_id) AS total_answers
+        FROM answer
+        GROUP BY question_id) AS total_answers_per_question);
 
 -- Câu 9: Thống kê số lượng account trong mỗi group
 SELECT `group`.*, COUNT(account_id) AS total_accounts
@@ -75,11 +76,11 @@ FROM `account`
 JOIN `position` USING(position_id)
 GROUP BY position_id
 HAVING COUNT(account_id) = 
-	(SELECT MIN(total_accounts)
-	FROM
-		(SELECT COUNT(account_id) AS total_accounts
-		FROM `account`
-		GROUP BY position_id) AS total_accounts_per_position);
+    (SELECT MIN(total_accounts)
+    FROM
+        (SELECT COUNT(account_id) AS total_accounts
+        FROM `account`
+        GROUP BY position_id) AS total_accounts_per_position);
 
 -- Câu 11: Thống kê mỗi phòng ban có bao nhiêu developer, tester, scrum master, project manager
 SELECT department_name, position_name, IFNULL(total_accounts, 0) AS total_accounts
@@ -88,13 +89,13 @@ FROM
     FROM department
     CROSS JOIN `position`
     WHERE position_name IN ('DEVELOPER' , 'TESTER', 'SCRUM_MASTER', 'PROJECT_MANAGER')) AS t1
-	LEFT JOIN
-		(SELECT department_id, position_id, COUNT(account_id) AS total_accounts
-		FROM `account`
-		JOIN `position` USING (position_id)
-		JOIN department USING (department_id)
-		WHERE position_name IN ('DEVELOPER' , 'TESTER', 'SCRUM_MASTER', 'PROJECT_MANAGER')
-		GROUP BY department_id, position_id) AS t2 USING (department_id, position_id)
+    LEFT JOIN
+        (SELECT department_id, position_id, COUNT(account_id) AS total_accounts
+        FROM `account`
+        JOIN `position` USING (position_id)
+        JOIN department USING (department_id)
+        WHERE position_name IN ('DEVELOPER' , 'TESTER', 'SCRUM_MASTER', 'PROJECT_MANAGER')
+        GROUP BY department_id, position_id) AS t2 USING (department_id, position_id)
 GROUP BY department_id , position_id
 ORDER BY department_id , position_id;
 

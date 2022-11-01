@@ -27,13 +27,14 @@ HAVING COUNT(account_id) > 3;
 -- Câu 5: Viết lệnh để lấy ra danh sách câu hỏi được sử dụng trong đề thi nhiều nhất
 SELECT question.*
 FROM exam_question
-JOIN question USING(question_id)
+RIGHT JOIN question USING(question_id)
 GROUP BY question_id
-HAVING COUNT(exam_id) =
-    (SELECT MAX(total_exams)
+HAVING COUNT(exam_id) = 
+    (SELECT MIN(total_exams)
     FROM
         (SELECT COUNT(exam_id) AS total_exams
         FROM exam_question
+        RIGHT JOIN question USING(question_id)
         GROUP BY question_id) AS total_exams_per_question);
 
 -- Câu 6: Thống kê mỗi category question được sử dụng trong bao nhiêu question
@@ -55,13 +56,14 @@ GROUP BY question_id;
 -- Câu 8: Lấy ra question có nhiều câu trả lời nhất
 SELECT question.*
 FROM answer
-JOIN question USING(question_id)
+RIGHT JOIN question USING(question_id)
 GROUP BY question_id
 HAVING COUNT(answer_id) =
     (SELECT MAX(total_answers)
     FROM 
         (SELECT COUNT(answer_id) AS total_answers
         FROM answer
+        RIGHT JOIN question USING(question_id)
         GROUP BY question_id) AS total_answers_per_question);
 
 -- Câu 9: Thống kê số lượng account trong mỗi group
@@ -73,13 +75,14 @@ GROUP BY group_id;
 -- Câu 10: Tìm chức vụ có ít người nhất
 SELECT position_name
 FROM `account`
-JOIN `position` USING(position_id)
+RIGHT JOIN `position` USING(position_id)
 GROUP BY position_id
 HAVING COUNT(account_id) = 
     (SELECT MIN(total_accounts)
     FROM
         (SELECT COUNT(account_id) AS total_accounts
         FROM `account`
+        RIGHT JOIN `position` USING(position_id)
         GROUP BY position_id) AS total_accounts_per_position);
 
 -- Câu 11: Thống kê mỗi phòng ban có bao nhiêu developer, tester, scrum master, project manager

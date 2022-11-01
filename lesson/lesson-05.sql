@@ -1,6 +1,6 @@
 -- SUBQUERY: Truy vấn con
 -- Kết quả trả về có thể là một bảng hoặc một giá trị
--- Có thể dùng trong các mệnh đề FROM, WHERE...
+-- Có thể dùng trong các mệnh đề SELECT, FROM, WHERE...
 -- Toán tử: IN, ALL, ANY, EXISTS
 -- ALL: Trả về TRUE khi thỏa mãn tất cả điều kiện
 SELECT *

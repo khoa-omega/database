@@ -55,6 +55,33 @@ WHERE CHAR_LENGTH(content) > 300;
 
 DELETE FROM view_question_03_subquery;
 
+-- Câu 4: Tạo view có chứa danh sách các phòng ban có nhiều nhân viên nhất
+CREATE OR REPLACE VIEW view_question_04_subquery AS
+SELECT department.*, COUNT(account_id) AS total_accounts
+FROM department
+LEFT JOIN `account` USING(department_id)
+GROUP BY department_id
+HAVING total_accounts =
+    (SELECT MAX(total_accounts)
+    FROM 
+        (SELECT COUNT(account_id) AS total_accounts
+        FROM department
+        LEFT JOIN `account` USING(department_id)
+        GROUP BY department_id) AS total_accounts_per_department);
+
+CREATE OR REPLACE VIEW view_question_04_cte AS
+WITH cte_total_accounts_per_department AS (
+    SELECT department.*, COUNT(account_id) AS total_accounts
+    FROM department
+    LEFT JOIN `account` USING(department_id)
+    GROUP BY department_id
+)
+SELECT *
+FROM cte_total_accounts_per_department
+WHERE total_accounts =
+    (SELECT MAX(total_accounts)
+    FROM cte_total_accounts_per_department);
+
 -- Câu 5: Tạo view có chứa tất các các câu hỏi do user họ Nguyễn tạo
 CREATE OR REPLACE VIEW view_question_05_subquery AS
 SELECT *
@@ -62,13 +89,13 @@ FROM question
 WHERE creator_id IN
     (SELECT account_id
     FROM `account`
-    WHERE full_name LIKE 'Nguyen %');
+    WHERE full_name LIKE 'Nguyễn %');
 
 CREATE OR REPLACE VIEW view_question_05_cte AS
 WITH cte_account_has_username_start_with_nguyen AS (
     SELECT account_id
     FROM `account`
-    WHERE full_name LIKE 'Nguyen %'
+    WHERE full_name LIKE 'Nguyễn %'
 )
 SELECT *
 FROM question

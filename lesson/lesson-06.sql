@@ -1,9 +1,10 @@
--- STORED PROCEDURE: Thủ tục
--- DELIMITER: Chuyển ký tự phân cách các câu lệnh (VD: Từ ; thành $$)
--- IN: Khai báo biến dùng để truyền dữ liệu vào
--- OUT: Khai báo biến dùng để lấy dữ liệu ra
+-- DELIMITER: Dùng để đổi ký tự ngăn cách các câu lệnh MySQL
+
+-- STORED PROCEDURE: Thủ tục lưu trữ
+-- IN: Khai báo tham số dùng để truyền dữ liệu vào
+-- OUT: Khai báo tham số dùng để lấy dữ liệu ra
 -- INOUT: Là kết hợp của cả IN và OUT
--- DECLARE: Khai báo biến trong thủ tục
+-- DECLARE: Khai báo biến trong STORE PROCEDURE
 -- VD 1: Hiển thị thông tin tất cả phòng ban
 DROP PROCEDURE IF EXISTS sp_find_all_departments;
 DELIMITER $$
@@ -48,7 +49,8 @@ SELECT @department_name;
 CALL sp_find_department_name_by_id(5, @department_name);
 SELECT @department_name;
 
--- FUNCTION: Hàm, phương thức
+-- FUNCTION: Hàm số, phương thức
+-- Chỉ trả về duy nhất một giá trị
 -- VD: Lấy ra tên phòng ban từ id
 SET GLOBAL log_bin_trust_function_creators = 1;
 
@@ -61,12 +63,22 @@ BEGIN
     SELECT department_name INTO var_department_name
     FROM department
     WHERE department_id = id;
-    
+
     RETURN var_department_name;
 END $$
 DELIMITER ;
 
 SELECT fn_find_department_name_by_id(4);
 
-
-
+-- So sánh STORE PROCEDURE và FUNCTION
+-- +--------------------------------------------+-------------------------------------------+
+-- | STORED PROCEDURE                           | FUNCTION                                  |
+-- +--------------------------------------------+-------------------------------------------+
+-- | Có thể trả về nhiều tham số đầu ra         | Chỉ trả về duy nhất 1 giá trị             |
+-- +--------------------------------------------+-------------------------------------------+
+-- | Sử dụng từ khóa CALL để thực thi           | Sử dụng từ khóa SELECT để thực thi        |
+-- +--------------------------------------------+-------------------------------------------+
+-- | Có thể dùng ĐỌC, THÊM, SỬA, XÓA dữ liệu    | Chỉ có thể dùng ĐỌC dữ liệu               |
+-- +--------------------------------------------+-------------------------------------------+
+-- | Tham số đầu ra không thể là một BẢNG       | Giá trị trả về không thể là một BẢNG      |
+-- +--------------------------------------------+-------------------------------------------+

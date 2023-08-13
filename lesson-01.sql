@@ -16,18 +16,18 @@ USE lesson_01;
 -- Hiển thị danh sách cơ sở dữ liệu
 SHOW DATABASES;
 
--- DATA TYPE: Kiểu dữ liệu
+-- Data types: Các kiểu dữ liệu
 -- INT: Số nguyên
 -- VARCHAR(50): Chuỗi (tối đa 50 ký tự)
--- DATE: Thời gian (yyyy-MM-dd)
+-- DATE: Thời gian (ISO 8601: yyyy-MM-dd)
 
 -- Xóa bảng (nếu tồn tại)
 DROP TABLE IF EXISTS department;
 
 -- Tạo bảng
 CREATE TABLE department (
-	department_id INT,
-	department_name VARCHAR(50)
+    department_id INT,
+    department_name VARCHAR(50)
 );
 
 -- Hiển thị danh sách bảng

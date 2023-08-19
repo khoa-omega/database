@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS assignment_03;
-CREATE DATABASE assignment_03;
-USE assignment_03;
+DROP DATABASE IF EXISTS lesson_03;
+CREATE DATABASE lesson_03;
+USE lesson_03;
 
 -- Tạo bảng department
 DROP TABLE IF EXISTS department;
@@ -113,8 +113,6 @@ CREATE TABLE exam_question (
     FOREIGN KEY (question_id) REFERENCES question (question_id)
 );
 
--- Câu 1: Thêm ít nhất 10 records vào mỗi table
-
 -- Thêm dữ liệu cho bảng department
 INSERT INTO department  (department_name)
 VALUES                  ("Marketing"    ),
@@ -141,7 +139,7 @@ VALUES              ("haidang29productions@gmail.com", "dangblack"   , "Nguyen H
                     ("account1@gmail.com"            , "quanganh"    , "Tong Quang Anh"    , 2            , 2          , "2011-03-05"),
                     ("account2@gmail.com"            , "vanchien"    , "Nguyen Van Chien"  , 2            , 3          , "2012-03-07"),
                     ("account3@gmail.com"            , "cocoduongqua", "Duong Do"          , 3            , 4          , "2013-03-08"),
-                    ("account4@gmail.com"            , "doccocaubai" , "Nguyen Chien Thang", 5            , 4          , "2014-03-10"),
+                    ("account4@gmail.com"            , "doccocaubai" , "Nguyen Chien Thang", 3            , 4          , "2014-03-10"),
                     ("dapphatchetngay@gmail.com"     , "khabanh"     , "Ngo Ba Kha"        , 3            , 3          , "2015-04-05"),
                     ("songcodaoly@gmail.com"         , "huanhoahong" , "Bui Xuan Huan"     , 4            , 2          , "2016-04-05"),
                     ("sontungmtp@gmail.com"          , "tungnui"     , "Nguyen Thanh Tung" , 4            , 1          , "2018-04-07"),
@@ -165,12 +163,12 @@ VALUES              ("Testing System"   , 4         , "2019-03-05"),
 INSERT INTO group_account   (group_id, account_id, joined_date )
 VALUES                      (1       , 1         , "2019-03-05"),
                             (1       , 2         , "2020-03-07"),
-                            (2       , 3         , "2018-03-09"),
+                            (2       , 4         , "2018-03-09"),
                             (2       , 4         , "2017-03-10"),
                             (2       , 2         , "2020-03-28"),
                             (3       , 8         , "2021-04-06"),
-                            (1       , 8         , "2022-04-07"),
-                            (2       , 8         , "2022-04-08"),
+                            (3       , 8         , "2022-04-07"),
+                            (3       , 8         , "2022-04-08"),
                             (3       , 9         , "2022-04-09"),
                             (4       , 10        , "2016-04-10");
 
@@ -242,76 +240,81 @@ VALUES                      (1          , 1      ),
                             (9          , 8      ),
                             (10         , 10     );
 
--- Câu 2: Lấy ra tất cả các phòng ban
+-- Mệnh đề SELECT
+-- VD: Lấy ra ngày hiện tại
+SELECT CURRENT_DATE;
+
+-- Mệnh đề FROM
+-- VD: Lấy ra danh sách phòng ban
 SELECT *
 FROM department;
 
--- Câu 3: Lấy ra id của phòng ban "Sale"
-SELECT department_id
+-- Mệnh đề WHERE
+-- Operators: Các toán tử
+-- Toán tử: >, >=, <, <=, =, !=
+-- VD: Lấy ra phòng ban có id = 2
+SELECT *
 FROM department
-WHERE department_name = "Sale";
-
--- Câu 4: Lấy ra thông tin account có full name dài nhất
-SELECT *
-FROM account
-ORDER BY CHAR_LENGTH(full_name) DESC
-LIMIT 1;
-
--- Câu 5: Lấy ra thông tin account có full name dài nhất và thuộc phòng ban có id = 3
-SELECT *
-FROM account
-WHERE department_id = 3
-ORDER BY CHAR_LENGTH(full_name) DESC
-LIMIT 1;
-
--- Câu 6: Lấy ra tên group đã tham gia trước ngày 20/12/2019
-SELECT group_name
-FROM `group`
-WHERE created_date < "2019-12-20";
-
--- Câu 7: Lấy ra id của question có >= 4 câu trả lời
-SELECT question_id
-FROM answer
-GROUP BY question_id
-HAVING COUNT(answer_id) >= 4;
-
--- Câu 8: Lấy ra các mã đề thi có thời gian thi >= 60 phút và được tạo trước ngày 20/12/2019
-SELECT code
-FROM exam
-WHERE duration >= 60 AND created_date < "2019-12-20";
-
--- Câu 9: Lấy ra 5 group được tạo gần đây nhất
-SELECT *
-FROM `group`
-ORDER BY created_date DESC
-LIMIT 5;
-
--- Câu 10: Đếm số nhân viên thuộc department có id = 2
-SELECT COUNT(account_id) AS account_count
-FROM account
 WHERE department_id = 2;
-
--- Câu 11: Lấy ra nhân viên có tên bắt đầu bằng chữ "D" và kết thúc bằng chữ "o"
+-- Toán tử: AND, OR
+-- VD: Lấy ra phòng ban có id > 5 và có tên là "Giám đốc"
 SELECT *
-FROM account
-WHERE SUBSTRING_INDEX(full_name, " ", -1) LIKE "D%o";
+FROM department
+WHERE department_id > 5 AND department_name = "Giám đốc";
+-- Toán tử: BETWEEN AND
+-- VD: Lấy ra phòng ban có 5 <= id <= 8
+SELECT *
+FROM department
+WHERE department_id BETWEEN 5 AND 8;
+-- Toán tử" IN
+-- VD: Lấy ra phòng ban có id = 2 hoặc = 4 hoặc = 6 hoặc = 8
+SELECT *
+FROM department
+WHERE department_id IN (2, 4, 6, 8);
+-- Toán tử: LIKE
+-- %: Đại diện cho 0 hoặc nhiều ký tự
+-- _: Đại diện cho 1 ký tự
+-- VD: Lấy ra phòng ban có tên bắt đầu bằng "B"
+SELECT *
+FROM department
+WHERE department_name LIKE "B%";
+-- Toán tử: IS NULL / IS NOT NULL
+-- VD: Lấy ra phòng ban có tên khác NULL
+SELECT *
+FROM department
+WHERE department_name IS NOT NULL;
 
--- Câu 12: Xóa tất cả các exam được tạo trước ngày 20/12/2019
-DELETE FROM exam
-WHERE created_date < "2019-12-20";
+-- Từ khóa: DISTINCT
+-- Chọn ra những giá trị phân biệt
+SELECT DISTINCT duration
+FROM exam;
 
--- Câu 13: Xóa tất cả các question có nội dung bắt đầu bằng từ "Câu hỏi"
-DELETE FROM question
-WHERE content LIKE "Câu hỏi %";
+-- Mệnh đề: ORDER BY
+-- ASC, DESC
+-- Mặc định: ASC
+-- VD: Lấy ra đề thi sắp xếp theo duration giảm dần
+SELECT *
+FROM exam
+ORDER BY duration DESC, created_date ASC;
 
--- Câu 14: Update thông tin của account có id = 5 thành tên "Nguyễn Bá Lộc"
--- và email thành "loc.nguyenba@vti.com.vn"
-UPDATE account
-SET full_name = "Nguyễn Bá Lộc",
-    email = "loc.nguyenba@vti.com.vn"
-WHERE account_id = 5;
+-- Mệnh đề: LIMIT
+-- VD: Lấy ra 3 phòng ban đầu tiên
+SELECT *
+FROM department
+ORDER BY department_id ASC
+LIMIT 3;
 
--- Câu 15: Update account có id = 5 sẽ thuộc group có id = 4
-UPDATE group_account
-SET group_id = 4
-WHERE account_id = 5;
+-- Các hàm tổng hợp
+-- COUNT: Đếm
+-- COUNT(*): Đếm số dòng
+-- COUNT(department_name): Đếm số dòng mà department_name khác NULL
+-- VD: Lấy ra số lượng phòng ban
+SELECT COUNT(*) AS department_count
+FROM department;
+-- MAX, MIN, SUM, AVG
+SELECT MAX(duration),
+       MIN(duration),
+       SUM(duration),
+       COUNT(duration),
+       AVG(duration)
+FROM exam;
